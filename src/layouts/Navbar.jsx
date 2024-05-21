@@ -1,36 +1,35 @@
 import React from "react";
+import Logo from "../components/Logo";
+import { Sidebar, Menu, MenuItem } from "react-mui-sidebar";
+import { Link } from "react-router-dom";
 
-import { Sidebar, Menu, MenuItem, Submenu, Logo } from "react-mui-sidebar";
-const Navbar =  () => {
+const Navbar = () => {
   return (
-    <Sidebar width={"270px"}>
-      <Logo img="https://adminmart.com/wp-content/uploads/2024/03/logo-admin-mart-news.png">
-        AdminMart
-      </Logo>
-      <Menu subHeading="HOME">
-        <MenuItem link="/" badge="true">
-          Modern
+    <Sidebar>
+      
+      <Menu subHeading="">
+      <Logo />
+        <MenuItem>
+          <Link to="/admin/dashboard">
+            <span>Dashboard</span>
+          </Link>
         </MenuItem>
-        <MenuItem>eCommerce</MenuItem>
-        <MenuItem>Analytical</MenuItem>
-      </Menu>
-      <Menu subHeading="APPS">
-        <MenuItem>Chat</MenuItem>
-        <MenuItem>Calendar</MenuItem>
-      </Menu>
-      <Menu subHeading="OTHERS">
-        <Submenu title="Menu Level">
-          <MenuItem>Post</MenuItem>
-          <MenuItem>Details</MenuItem>
-          <Submenu title="Level 2">
-            <MenuItem>new</MenuItem>
-            <MenuItem>Hello</MenuItem>
-          </Submenu>
-        </Submenu>
 
-        <MenuItem>Chip</MenuItem>
-        <MenuItem target="_blank" link="google.com">
-          External Link
+        <MenuItem>
+          <Link to="/admin/doctors">
+            <span>Doctors</span>
+          </Link>
+        </MenuItem>
+
+        <MenuItem>
+          <Link to="/admin/patients">
+            <span>Patients</span>
+          </Link>
+        </MenuItem>
+        <MenuItem>
+          <Link to="/admin/appointments">
+            <span>Appointments</span>
+          </Link>
         </MenuItem>
       </Menu>
     </Sidebar>

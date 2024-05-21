@@ -1,11 +1,10 @@
 import React from 'react'
-
-function Signup() {
+function Dashboard() {
   return (
     <div>
-      Sign up form
+      Dashboard
     </div>
   )
 }
 
-export default Signup
+export default Dashboard
