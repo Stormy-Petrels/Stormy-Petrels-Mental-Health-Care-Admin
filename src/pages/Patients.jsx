@@ -19,11 +19,12 @@ import {
   Button,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-
+import Loading from "../components/Loading";
 function Patients() {
+  const [loading, setLoading] = useState(true);
   const [patients, setPatients] = useState([]);
-  const [page, setPage] = useState(0); // trạng thái trang hiện tại
-  const [rowsPerPage, setRowsPerPage] = useState(10); // số hàng mỗi trang
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
     axios
@@ -31,9 +32,10 @@ function Patients() {
       .then((res) => {
         console.log(res);
         setPatients(res.data.payload);
+        setLoading(false);
       })
       .catch((err) => {
-        console.error(err); // Để in ra lỗi nếu có
+        console.error(err);
       });
   }, []);
 
@@ -46,9 +48,17 @@ function Patients() {
     setPage(0);
   };
 
+  if (loading) {
+    return (
+      <div className="flex">
+        <Loading />
+        <p>Loading</p>
+      </div>
+    );
+  }
   var patientDetails = "";
   patientDetails = patients
-    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) // phân trang
+    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     .map((patient) => {
       return (
         <TableRow key={patient.id}>
@@ -59,11 +69,35 @@ function Patients() {
           <TableCell align="left">{patient.healthCondition}</TableCell>
           <TableCell align="left">{patient.note}</TableCell>
           <TableCell align="right">
-            <div className="flex justify-center">
-              <Link to="/">EDIT</Link>
-              <Link to="/">DELETE</Link>
-            </div>
-          </TableCell>
+        <div className="flex justify-center">
+          <Link to="/">
+            <Button
+              variant="contained"
+              sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'darkgreen' } }}
+            >
+              Active
+            </Button>
+          </Link>
+          <Link to="/">
+            <Button
+              variant="outlined"
+              sx={{ borderColor: 'red', color: 'red', '&:hover': { borderColor: 'darkred', color: 'darkred' } }}
+            >
+              Inactive
+            </Button>
+          </Link>
+        </div>
+      </TableCell>
+      <TableCell align="right">
+        <Link to="/">
+          <Button
+            variant="contained"
+            sx={{ backgroundColor: 'blue', color: 'white', '&:hover': { backgroundColor: 'darkblue' } }}
+          >
+            EDIT
+          </Button>
+        </Link>
+      </TableCell>
         </TableRow>
       );
     });
@@ -79,10 +113,10 @@ function Patients() {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell align="left" style={{ minWidth: 70 }}>
+                <TableCell align="left" style={{ minWidth: 100 }}>
                   Name
                 </TableCell>
-                <TableCell align="left" style={{ minWidth: 100 }}>
+                <TableCell align="left" style={{ minWidth: 50 }}>
                   Email
                 </TableCell>
                 <TableCell align="left" style={{ minWidth: 70 }}>
@@ -91,13 +125,16 @@ function Patients() {
                 <TableCell align="left" style={{ minWidth: 50 }}>
                   Address
                 </TableCell>
-                <TableCell align="left" style={{ minWidth: 170 }}>
+                <TableCell align="left" style={{ minWidth: 100 }}>
                   Health Condition
                 </TableCell>
-                <TableCell align="left" style={{ minWidth: 170 }}>
+                <TableCell align="left" style={{ minWidth: 100 }}>
                   Note
                 </TableCell>
-                <TableCell align="center" style={{ minWidth: 170 }}>
+                <TableCell align="left" style={{ minWidth: 70 }}>
+                  Status
+                </TableCell>
+                <TableCell align="center" style={{ minWidth: 100 }}>
                   Action
                 </TableCell>
               </TableRow>
