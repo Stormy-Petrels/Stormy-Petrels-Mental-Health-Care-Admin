@@ -5,7 +5,8 @@ import Patients from "../pages/Patients";
 import NotFound from "../pages/NotFound";
 import Dashboard from "../pages/Dashboard";
 import Appointments from "../pages/Appointments";
-
+import PatientCreate from "../pages/PatientCreate";
+import PatientEdit from "../pages/PatientEdit";
 const MainLayout = () => {
   return (
     <div className="container" >
@@ -14,6 +15,8 @@ const MainLayout = () => {
         <Route exact path="/admin/dashboard" component={Dashboard} />
         <Route exact path="/admin/doctors" component={Doctors} />
         <Route exact path="/admin/patients" component={Patients} />
+        <Route exact path="/admin/patients/create" component={PatientCreate} />
+        <Route exact path="/admin/patients/:id/edit" component={PatientEdit} />
         <Route exact path="/admin/appointments" component={Appointments} />
         <Route path="/*" component={NotFound}></Route>
       </Switch>
