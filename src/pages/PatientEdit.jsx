@@ -7,19 +7,27 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useHistory } from 'react-router-dom';
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import {IconButton, InputAdornment } from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 function PatientEdit() {
     let {id} = useParams();
     
-    const [patient, setPatient] = useState({
-        healthCondition: '',
-        note: '',
-        email: '',
-        password: '',
-        fullName: '',
-        address: '',
-        phone: '',
-        isActive: 1
-      });
+    const [patient, setPatient] = useState({});
+    
+    useEffect(() => {
+      axios
+        .get(`http://127.0.0.1:8000/api/profile/${id}`)
+        .then((res) => {
+          console.log(res);
+          setPatient(res.data.data);
+          
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }, [id]);
+      
+     
     
       const history = useHistory();
     
@@ -63,6 +71,7 @@ function PatientEdit() {
             console.error('Error adding patient:', err);
           });
       };
+      
 
   return (
     <div>
