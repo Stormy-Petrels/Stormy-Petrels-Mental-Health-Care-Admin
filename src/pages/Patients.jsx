@@ -89,7 +89,7 @@ function Patients() {
         </div>
       </TableCell>
       <TableCell align="right">
-        <Link to="/">
+        <Link to={`/admin/patients/${patient.id}/edit`}>
           <Button
             variant="contained"
             sx={{ backgroundColor: 'blue', color: 'white', '&:hover': { backgroundColor: 'darkblue' } }}
@@ -106,7 +106,7 @@ function Patients() {
     <div>
       <div className="flex justify-between">
         <h1 className="font-bold text-3xl mb-4">Management patients</h1>
-        <Button variant="contained">Add patient</Button>
+        <Button variant="contained"><Link to="/admin/patients/create">ADD</Link></Button>
       </div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 440 }}>
