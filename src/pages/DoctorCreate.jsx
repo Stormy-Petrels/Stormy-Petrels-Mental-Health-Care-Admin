@@ -7,11 +7,11 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useHistory } from 'react-router-dom';
 
-function PatientCreate() {
+function DoctorCreate() {
   const [inputErrorList, setInputErrorList] = useState({});
-  const [patient, setPatient] = useState({
-    healthCondition: '',
-    note: '',
+  const [doctor, setDoctor] = useState({
+    description: '',
+    major: '',
     email: '',
     password: '',
     fullName: '',
@@ -24,20 +24,20 @@ function PatientCreate() {
 
   const handleInput = (e) => {
     const { name, value } = e.target;
-    setPatient({ ...patient, [name]: value });
+    setDoctor({ ...doctor, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
-      healthCondition: patient.healthCondition,
-      note: patient.note,
-      email: patient.email,
-      password: patient.password,
-      fullName: patient.fullName,
-      address: patient.address,
-      phone: patient.phone,
-      isActive: patient.isActive
+      description: doctor.description,
+      major: doctor.major,
+      email: doctor.email,
+      password: doctor.password,
+      fullName: doctor.fullName,
+      address: doctor.address,
+      phone: doctor.phone,
+      isActive: doctor.isActive
     };
 
     axios.post('http://127.0.0.1:8000/api/admin/doctors/create', data)
@@ -46,9 +46,9 @@ function PatientCreate() {
         setTimeout(() => {
           history.push('/admin/doctors');
         }, 2000);
-        setPatient({
-          healthCondition: '',
-          note: '',
+        setDoctor({
+          description: '',
+          major: '',
           email: '',
           password: '',
           fullName: '',
@@ -84,7 +84,7 @@ function PatientCreate() {
             <TextField
               label="Full Name"
               name="fullName"
-              value={patient.fullName}
+              value={doctor.fullName}
               onChange={handleInput}
               fullWidth
               margin="normal"
@@ -95,7 +95,7 @@ function PatientCreate() {
             <TextField
               label="Email"
               name="email"
-              value={patient.email}
+              value={doctor.email}
               onChange={handleInput}
               type="email"
               fullWidth
@@ -107,7 +107,7 @@ function PatientCreate() {
             <TextField
               label="Password"
               name="password"
-              value={patient.password}
+              value={doctor.password}
               onChange={handleInput}
               type="password"
               fullWidth
@@ -119,7 +119,7 @@ function PatientCreate() {
             <TextField
               label="Phone"
               name="phone"
-              value={patient.phone}
+              value={doctor.phone}
               onChange={handleInput}
               fullWidth
               margin="normal"
@@ -130,7 +130,7 @@ function PatientCreate() {
             <TextField
               label="Address"
               name="address"
-              value={patient.address}
+              value={doctor.address}
               onChange={handleInput}
               fullWidth
               margin="normal"
@@ -139,24 +139,24 @@ function PatientCreate() {
               helperText={inputErrorList.address && inputErrorList.address[0]}
             />
             <TextField
-              label="Health Condition"
-              name="healthCondition"
-              value={patient.healthCondition}
+              label="Description"
+              name="description"
+              value={doctor.description}
               onChange={handleInput}
               fullWidth
               margin="normal"
-              error={!!inputErrorList.healthCondition}
-              helperText={inputErrorList.healthCondition && inputErrorList.healthCondition[0]}
+              error={!!inputErrorList.description}
+              helperText={inputErrorList.description && inputErrorList.description[0]}
             />
             <TextField
-              label="Note"
-              name="note"
-              value={patient.note}
+              label="Major"
+              name="major"
+              value={doctor.major}
               onChange={handleInput}
               fullWidth
               margin="normal"
-              error={!!inputErrorList.note}
-              helperText={inputErrorList.note && inputErrorList.note[0]}
+              error={!!inputErrorList.major}
+              helperText={inputErrorList.major && inputErrorList.major[0]}
             />
             <Button type="submit" variant="contained" color="primary">
               Add Doctor
@@ -168,4 +168,4 @@ function PatientCreate() {
   );
 }
 
-export default PatientCreate;
+export default DoctorCreate;
