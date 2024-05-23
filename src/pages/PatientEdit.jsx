@@ -36,34 +36,36 @@ function PatientEdit() {
         setPatient({ ...patient, [name]: value });
       };
     
-      const handleSubmit = (e) => {
+      const handleUpdate = (e) => {
         e.preventDefault();
         const data = {
-          healthCondition: patient.healthCondition,
-          note: patient.note,
+          
           email: patient.email,
           password: patient.password,
           fullName: patient.fullName,
           address: patient.address,
           phone: patient.phone,
-          isActive: patient.isActive
+          image: patient.image,
+          healthCondition: patient.healthCondition,
+          note: patient.note,
         };
     
-        axios.post('http://127.0.0.1:8000/api/admin/patients/create', data)
+        axios.post(`http://127.0.0.1:8000/api/profile/${id}`, data)
           .then((res) => {
-            toast.success('Add patient successfully');
+            toast.success('Update patient successfully');
             setTimeout(() => {
               history.push('/admin/patients');
             }, 2000); 
             setPatient({
-              healthCondition: '',
-              note: '',
+              
               email: '',
               password: '',
               fullName: '',
               address: '',
               phone: '',
-              isActive: 1
+              image:'',
+              healthCondition: '',
+              note: '',
             });
           })
           .catch((err) => {
@@ -84,7 +86,7 @@ function PatientEdit() {
           </Button>
         </div>
         <div>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleUpdate}>
             <TextField
               label="Full Name"
               name="fullName"
@@ -93,6 +95,9 @@ function PatientEdit() {
               fullWidth
               margin="normal"
               required
+              InputLabelProps={{
+                shrink: true,
+            }}
             />
             <TextField
               label="Email"
@@ -103,6 +108,9 @@ function PatientEdit() {
               fullWidth
               margin="normal"
               required
+              InputLabelProps={{
+                shrink: true,
+            }}
             />
             <TextField
               label="Password"
@@ -113,6 +121,9 @@ function PatientEdit() {
               fullWidth
               margin="normal"
               required
+              InputLabelProps={{
+                shrink: true,
+            }}
             />
             <TextField
               label="Phone"
@@ -122,6 +133,9 @@ function PatientEdit() {
               fullWidth
               margin="normal"
               required
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
             <TextField
               label="Address"
@@ -131,6 +145,9 @@ function PatientEdit() {
               fullWidth
               margin="normal"
               required
+              InputLabelProps={{
+                shrink: true,
+            }}
             />
             <TextField
               label="Health Condition"
@@ -139,6 +156,9 @@ function PatientEdit() {
               onChange={handleInput}
               fullWidth
               margin="normal"
+              InputLabelProps={{
+                shrink: true,
+            }}
             />
             <TextField
               label="Note"
@@ -147,9 +167,23 @@ function PatientEdit() {
               onChange={handleInput}
               fullWidth
               margin="normal"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <TextField
+              label="Image"
+              name="image"
+              value={patient.image}
+              onChange={handleInput}
+              fullWidth
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+            }}
             />
             <Button type="submit" variant="contained" color="primary">
-              Add Patient
+              Update patient
             </Button>
           </form>
         </div>
