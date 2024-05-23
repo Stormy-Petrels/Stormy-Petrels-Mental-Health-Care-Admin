@@ -106,7 +106,7 @@ function Patients() {
     <div>
       <div className="flex justify-between">
         <h1 className="font-bold text-3xl mb-4">Management doctors</h1>
-        <Button variant="contained"><Link to="/admin/patients/create">ADD</Link></Button>
+        <Button variant="contained"><Link to="/admin/doctors/create">ADD</Link></Button>
       </div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 440 }}>
