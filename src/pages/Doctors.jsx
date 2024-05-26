@@ -1,12 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { format } from "date-fns";
-// import { get } from "https";
+import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
-import { useState, useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -18,8 +14,8 @@ import {
   TablePagination,
   Button,
 } from "@mui/material";
-import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
+
 function Patients() {
   const [loading, setLoading] = useState(true);
   const [patients, setPatients] = useState([]);
@@ -30,7 +26,6 @@ function Patients() {
     axios
       .get(`http://127.0.0.1:8000/api/admin/doctors`)
       .then((res) => {
-        console.log(res);
         setPatients(res.data.data);
         setLoading(false);
       })
@@ -56,48 +51,61 @@ function Patients() {
       </div>
     );
   }
-  var patientDetails = "";
-  patientDetails = patients
+
+  const baseURL = "http://127.0.0.1:8000/images/"; // Adjust this base URL as per your backend setup
+
+  var patientDetails = patients
     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     .map((patient) => {
       return (
         <TableRow key={patient.id}>
           <TableCell align="left">{patient.fullName}</TableCell>
+          <TableCell align="left">
+            {patient.image ? (
+              <img
+                src={`${baseURL}${patient.image}`}
+                alt={patient.fullName}
+                style={{ width: "50px", height: "50px", objectFit: "cover" }}
+              />
+            ) : (
+              "No Image"
+            )}
+          </TableCell>
           <TableCell align="left">{patient.email}</TableCell>
           <TableCell align="left">{patient.phone}</TableCell>
           <TableCell align="left">{patient.address}</TableCell>
           <TableCell align="left">{patient.major}</TableCell>
           <TableCell align="left">{patient.description}</TableCell>
           <TableCell align="right">
-        <div className="flex justify-center">
-          <Link to="/">
-            <Button
-              variant="contained"
-              sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'darkgreen' } }}
-            >
-              Active
-            </Button>
-          </Link>
-          <Link to="/">
-            <Button
-              variant="outlined"
-              sx={{ borderColor: 'red', color: 'red', '&:hover': { borderColor: 'darkred', color: 'darkred' } }}
-            >
-              Inactive
-            </Button>
-          </Link>
-        </div>
-      </TableCell>
-      <TableCell align="right">
-        <Link to={`/admin/doctors/${patient.id}/edit`}>
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: 'blue', color: 'white', '&:hover': { backgroundColor: 'darkblue' } }}
-          >
-            EDIT
-          </Button>
-        </Link>
-      </TableCell>
+            <div className="flex justify-center">
+              <Link to="/">
+                <Button
+                  variant="contained"
+                  sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'darkgreen' } }}
+                >
+                  Active
+                </Button>
+              </Link>
+              <Link to="/">
+                <Button
+                  variant="outlined"
+                  sx={{ borderColor: 'red', color: 'red', '&:hover': { borderColor: 'darkred', color: 'darkred' } }}
+                >
+                  Inactive
+                </Button>
+              </Link>
+            </div>
+          </TableCell>
+          <TableCell align="right">
+            <Link to={`/admin/doctors/${patient.id}/edit`}>
+              <Button
+                variant="contained"
+                sx={{ backgroundColor: 'blue', color: 'white', '&:hover': { backgroundColor: 'darkblue' } }}
+              >
+                EDIT
+              </Button>
+            </Link>
+          </TableCell>
         </TableRow>
       );
     });
@@ -115,6 +123,9 @@ function Patients() {
               <TableRow>
                 <TableCell align="left" style={{ minWidth: 100 }}>
                   Name
+                </TableCell>
+                <TableCell align="left" style={{ maxWidth: 90 }}>
+                  Avt
                 </TableCell>
                 <TableCell align="left" style={{ minWidth: 50 }}>
                   Email

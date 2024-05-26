@@ -95,7 +95,7 @@ function Patients() {
             variant="contained"
             sx={{ backgroundColor: 'blue', color: 'white', '&:hover': { backgroundColor: 'darkblue' } }}
           >
-            EDIT
+            Edit
           </Button>
         </Link>
       </TableCell>
