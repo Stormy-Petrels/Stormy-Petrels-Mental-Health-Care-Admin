@@ -89,7 +89,7 @@ function Patients() {
         </div>
       </TableCell>
       <TableCell align="right">
-        <Link to={`/admin/patients/${patient.id}/edit`}>
+        <Link to={`/admin/doctors/${patient.id}/edit`}>
           <Button
             variant="contained"
             sx={{ backgroundColor: 'blue', color: 'white', '&:hover': { backgroundColor: 'darkblue' } }}

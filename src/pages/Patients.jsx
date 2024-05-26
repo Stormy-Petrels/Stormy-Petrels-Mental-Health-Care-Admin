@@ -17,6 +17,7 @@ import {
   Paper,
   TablePagination,
   Button,
+  Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
@@ -105,7 +106,9 @@ function Patients() {
   return (
     <div>
       <div className="flex justify-between">
-        <h1 className="font-bold text-3xl mb-4">Management patients</h1>
+      <Typography variant="h4" gutterBottom>
+        Management patients
+      </Typography>
         <Button variant="contained"><Link to="/admin/patients/create">ADD</Link></Button>
       </div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>

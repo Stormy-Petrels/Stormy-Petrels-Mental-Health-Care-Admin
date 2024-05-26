@@ -2,11 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
-import { Button, TextField, Container, Typography } from "@mui/material";
+import { Button, TextField, Container, Typography, Grid, IconButton } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useHistory } from 'react-router-dom';
-
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 function PatientCreate() {
   const [inputErrorList, setInputErrorList] = useState({});
   const [patient, setPatient] = useState({
@@ -73,95 +73,122 @@ function PatientCreate() {
     <div>
       <Container>
         <ToastContainer />
-        <div className="flex justify-between">
-          <h1 className="font-bold text-2xl mb-4">Add patients</h1>
-          <Button variant="contained">
-            <Link to="/admin/patients" style={{ textDecoration: 'none', color: 'white' }}>Back</Link>
-          </Button>
+        <div className="flex">
+            <IconButton className="justify-content" component={Link} to="/admin/patients" aria-label="back">
+                <ArrowBackIcon />
+            </IconButton>
+            <Typography variant="h4" gutterBottom>
+                Add patient
+            </Typography>
         </div>
         <div>
-          <form onSubmit={handleSubmit}>
-            <TextField
-              label="Full Name"
-              name="fullName"
-              value={patient.fullName}
-              onChange={handleInput}
-              fullWidth
-              margin="normal"
-              required
-              error={!!inputErrorList.fullName}
-              helperText={inputErrorList.fullName && inputErrorList.fullName[0]}
-            />
-            <TextField
-              label="Email"
-              name="email"
-              value={patient.email}
-              onChange={handleInput}
-              type="email"
-              fullWidth
-              margin="normal"
-              required
-              error={!!inputErrorList.email}
-              helperText={inputErrorList.email && inputErrorList.email[0]}
-            />
-            <TextField
-              label="Password"
-              name="password"
-              value={patient.password}
-              onChange={handleInput}
-              type="password"
-              fullWidth
-              margin="normal"
-              required
-              error={!!inputErrorList.password}
-              helperText={inputErrorList.password && inputErrorList.password[0]}
-            />
-            <TextField
-              label="Phone"
-              name="phone"
-              value={patient.phone}
-              onChange={handleInput}
-              fullWidth
-              margin="normal"
-              required
-              error={!!inputErrorList.phone}
-              helperText={inputErrorList.phone && inputErrorList.phone[0]}
-            />
-            <TextField
-              label="Address"
-              name="address"
-              value={patient.address}
-              onChange={handleInput}
-              fullWidth
-              margin="normal"
-              required
-              error={!!inputErrorList.address}
-              helperText={inputErrorList.address && inputErrorList.address[0]}
-            />
-            <TextField
-              label="Health Condition"
-              name="healthCondition"
-              value={patient.healthCondition}
-              onChange={handleInput}
-              fullWidth
-              margin="normal"
-              error={!!inputErrorList.healthCondition}
-              helperText={inputErrorList.healthCondition && inputErrorList.healthCondition[0]}
-            />
-            <TextField
-              label="Note"
-              name="note"
-              value={patient.note}
-              onChange={handleInput}
-              fullWidth
-              margin="normal"
-              error={!!inputErrorList.note}
-              helperText={inputErrorList.note && inputErrorList.note[0]}
-            />
-            <Button type="submit" variant="contained" color="primary">
-              Add Patient
-            </Button>
-          </form>
+        <form onSubmit={handleSubmit}>
+            <Grid container spacing={3}>
+               
+                <Grid item xs={12} md={4}>
+                    <TextField
+                        label="Full Name"
+                        name="fullName"
+                        value={patient.fullName}
+                        onChange={handleInput}
+                        fullWidth
+                        margin="normal"
+                        required
+                        error={!!inputErrorList.fullName}
+                        helperText={inputErrorList.fullName && inputErrorList.fullName[0]}
+                    />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                    <TextField
+                        label="Email"
+                        name="email"
+                        value={patient.email}
+                        onChange={handleInput}
+                        type="email"
+                        fullWidth
+                        margin="normal"
+                        required
+                        error={!!inputErrorList.email}
+                        helperText={inputErrorList.email && inputErrorList.email[0]}
+                    />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                    <TextField
+                        label="Password"
+                        name="password"
+                        value={patient.password}
+                        onChange={handleInput}
+                        type="password"
+                        fullWidth
+                        margin="normal"
+                        required
+                        error={!!inputErrorList.password}
+                        helperText={inputErrorList.password && inputErrorList.password[0]}
+                    />
+                </Grid>
+
+             
+                <Grid item xs={12} md={6}>
+                    <TextField
+                        label="Phone"
+                        name="phone"
+                        value={patient.phone}
+                        onChange={handleInput}
+                        fullWidth
+                        margin="normal"
+                        required
+                        error={!!inputErrorList.phone}
+                        helperText={inputErrorList.phone && inputErrorList.phone[0]}
+                    />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    <TextField
+                        label="Address"
+                        name="address"
+                        value={patient.address}
+                        onChange={handleInput}
+                        fullWidth
+                        margin="normal"
+                        required
+                        error={!!inputErrorList.address}
+                        helperText={inputErrorList.address && inputErrorList.address[0]}
+                    />
+                </Grid>
+
+            
+                <Grid item xs={12} md={6}>
+                    <TextField
+                        label="Health Condition"
+                        name="healthCondition"
+                        value={patient.healthCondition}
+                        onChange={handleInput}
+                        fullWidth
+                        margin="normal"
+                        error={!!inputErrorList.healthCondition}
+                        helperText={inputErrorList.healthCondition && inputErrorList.healthCondition[0]}
+                    />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                    <TextField
+                        label="Note"
+                        name="note"
+                        value={patient.note}
+                        onChange={handleInput}
+                        fullWidth
+                        margin="normal"
+                        error={!!inputErrorList.note}
+                        helperText={inputErrorList.note && inputErrorList.note[0]}
+                    />
+                </Grid>
+
+           
+                <Grid item xs={12}>
+                    <Button type="submit" variant="contained" color="primary" fullWidth>
+                        Add Patient
+                    </Button>
+                </Grid>
+            </Grid>
+        </form>
         </div>
       </Container>
     </div>
