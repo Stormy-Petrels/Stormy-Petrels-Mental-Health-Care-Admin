@@ -203,6 +203,8 @@ function DoctorCreate() {
               <Grid item xs={12} md={4}>
                 <input type="file" name="urlImage" onChange={handleImageChange} />
               </Grid>
+
+              
               <Grid item xs={12}>
                 <Button type="submit" variant="contained" color="primary" fullWidth>
                   Add Doctor
