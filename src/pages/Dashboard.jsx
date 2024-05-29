@@ -1,12 +1,21 @@
-import React from 'react';
-import { Grid } from '@mui/material';
-import { styled } from '@mui/system';
-import CardComponent from '../components/CardComponent';
+import React from "react";
+import {
+  Grid,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+import { styled } from "@mui/system";
+import CardComponent from "../components/CardComponent";
+import { Typography } from "@mui/material";
 
-const DashboardContainer = styled('div')({
+const DashboardContainer = styled("div")({
   flexGrow: 1,
   padding: 20,
-  minHeight: '100vh',
+  minHeight: "100vh",
 });
 
 export default function Dashboard() {
@@ -56,6 +65,61 @@ export default function Dashboard() {
             bgcolor="#FF7849"
             isPositive={true}
           />
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={8}>
+          <Typography variant="h5" sx={{ mt: 3, mb:2 }}>
+            Popular doctors
+          </Typography>
+          <Paper sx={{ mb: 3 }}>
+            <TableHead>
+              <TableRow>
+                <TableCell align="center" style={{ minWidth: 200 }}>
+                  Name Doctor
+                </TableCell>
+
+                <TableCell align="center" style={{ minWidth: 150 }}>
+                  Email
+                </TableCell>
+
+                <TableCell align="center" style={{ minWidth: 120 }}>
+                  Major
+                </TableCell>
+                <TableCell align="center" style={{ minWidth: 70 }}>
+                  Slot
+                </TableCell>
+                <TableCell align="center" style={{ minWidth: 70 }}>
+                  Total money
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody></TableBody>
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+        <Typography variant="h5" sx={{ mt: 3, mb:2 }}>
+            Popular majors
+          </Typography>
+          <Paper sx={{ mb: 3 }}>
+            <TableHead>
+              <TableRow>
+                <TableCell align="center" style={{ minWidth: 120 }}>
+                  Name Doctor
+                </TableCell>
+                <TableCell align="center" style={{ minWidth: 150 }}>
+                  Email
+                </TableCell>
+                <TableCell align="center" style={{ minWidth: 120 }}>
+                  Major
+                </TableCell>
+                </TableRow>
+             </TableHead>
+             <TableBody></TableBody>
+          </Paper>
+        
         </Grid>
       </Grid>
     </DashboardContainer>
