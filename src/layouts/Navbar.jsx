@@ -80,17 +80,7 @@ const Navbar = () => {
           </ListItem>
         </List>
       </Box>
-      <Box>
-        <Divider />
-        <List>
-          <ListItem button component={Link} to="/" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mt: 2 }}>
-            <ListItemIcon sx={{ minWidth: 35 }}>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItem>
-        </List>
-      </Box>
+     
     </Box>
   );
 };
