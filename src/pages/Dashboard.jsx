@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  Avatar,
   Grid,
   Paper,
   Table,
@@ -25,6 +26,8 @@ export default function Dashboard() {
     totalPatients: '',
     totalRevenue: ''
   });
+
+  const [doctors, setDoctors] = useState([]);
   
 
   useEffect(() => {
@@ -47,6 +50,25 @@ export default function Dashboard() {
 
     fetchStats();
   }, []);
+
+
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/admin/stats/doctors');
+        const data = await response.json();
+        if (data.status === 200) {
+          setDoctors(data.data);
+        }
+      } catch (error) {
+        console.error('Error fetching doctors:', error);
+      }
+    };
+
+    fetchDoctors();
+  }, []);
+
+  const baseURL = "http://127.0.0.1:8000/images/";
 
   return (
     <DashboardContainer>
@@ -116,7 +138,20 @@ export default function Dashboard() {
                 </TableCell>
               </TableRow>
             </TableHead>
-            <TableBody></TableBody>
+            <TableBody>
+            {doctors.map((doctor, index) => (
+            <TableRow key={index}>
+              <TableCell align="center">
+                <Avatar alt={doctor.doctorName}  src={`${baseURL}${doctor.avatar}`} />
+                {doctor.doctorName}
+              </TableCell>
+              <TableCell align="center">{doctor.doctorEmail}</TableCell>
+              <TableCell align="center">{doctor.doctorMajor}</TableCell>
+              <TableCell align="center">{doctor.totalSlots}</TableCell>
+              <TableCell align="center">{doctor.totalEarnings ? doctor.totalEarnings : '0.00'}</TableCell>
+            </TableRow>
+          ))}
+            </TableBody>
           </Paper>
         </Grid>
 
