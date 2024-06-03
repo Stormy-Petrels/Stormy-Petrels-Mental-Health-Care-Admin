@@ -12,7 +12,8 @@ import {
 import { styled } from "@mui/system";
 import CardComponent from "../components/CardComponent";
 import { Typography } from "@mui/material";
-
+import { Pie } from 'react-chartjs-2';
+import 'chart.js/auto';
 const DashboardContainer = styled("div")({
   flexGrow: 1,
   padding: 20,
@@ -28,7 +29,8 @@ export default function Dashboard() {
   });
 
   const [doctors, setDoctors] = useState([]);
-  
+  const [majors, setMajors] = useState([]);
+  const [chartData, setChartData] = useState({});
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -69,6 +71,34 @@ export default function Dashboard() {
   }, []);
 
   const baseURL = "http://127.0.0.1:8000/images/";
+  
+
+  useEffect(() => {
+    const fetchMajors = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/admin/stats/majors');
+        const data = await response.json();
+        if (data.status === 200) {
+          setMajors(data.data);
+          setChartData({
+            labels: data.data.map(major => major.majorName),
+            datasets: [
+              {
+                data: data.data.map(major => major.totalDoctors),
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
+              }
+            ]
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching majors:', error);
+      }
+    };
+
+    fetchMajors();
+  }, []);
+
+
 
   return (
     <DashboardContainer>
@@ -159,22 +189,36 @@ export default function Dashboard() {
         <Typography variant="h5" sx={{ mt: 3, mb:2 }}>
             Popular majors
           </Typography>
-          <Paper sx={{ mb: 3 }}>
-            <TableHead>
-              <TableRow>
-                <TableCell align="center" style={{ minWidth: 120 }}>
-                  Name Doctor
-                </TableCell>
-                <TableCell align="center" style={{ minWidth: 150 }}>
-                  Email
-                </TableCell>
-                <TableCell align="center" style={{ minWidth: 120 }}>
-                  Major
-                </TableCell>
-                </TableRow>
-             </TableHead>
-             <TableBody></TableBody>
-          </Paper>
+           <Paper sx={{ mb: 3 }}>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell align="center" style={{ minWidth: 120 }}>
+              Name Doctor
+            </TableCell>
+            <TableCell align="center" style={{ minWidth: 150 }}>
+              Major
+            </TableCell>
+            <TableCell align="center" style={{ minWidth: 120 }}>
+              Pie Chart
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {majors.map((major, index) => (
+            <TableRow key={index}>
+              <TableCell align="center">{major.majorName}</TableCell>
+              <TableCell align="center">{major.totalDoctors}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+      {chartData && (
+        <div style={{ width: '50%', margin: '0 auto' }}>
+          <Pie data={chartData} />
+        </div>
+      )}
+    </Paper>
         
         </Grid>
       </Grid>
