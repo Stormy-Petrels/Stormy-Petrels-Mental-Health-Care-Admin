@@ -109,7 +109,18 @@ function Patients() {
       <Typography variant="h4" gutterBottom>
         Management patients
       </Typography>
-        <Button variant="contained"><Link to="/admin/patients/create">ADD</Link></Button>
+        <Link to="/admin/patients/create">
+          <Button
+            variant="contained"
+            sx={{ backgroundColor: 'blue', color: 'white', '&:hover': { backgroundColor: 'darkblue' } }}
+          >
+            Add
+          </Button>
+        </Link>
+
+
+
+
       </div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 600 }}>
