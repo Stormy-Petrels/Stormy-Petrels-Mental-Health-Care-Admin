@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useState, useEffect } from "react";
+import {  useHistory, useLocation } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -26,6 +27,8 @@ function Patients() {
   const [patients, setPatients] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const history = useHistory();
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     axios
@@ -38,7 +41,7 @@ function Patients() {
       .catch((err) => {
         console.error(err);
       });
-  }, []);
+  }, [reload]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -48,6 +51,22 @@ function Patients() {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const InActive = async (id) => {
+    try {
+      await axios.post(`http://127.0.0.1:8000/api/admin/users/status/block/${id.id}`).then(setReload(!reload));
+    } catch (error) {
+      console.error('Error posting link:', error);
+    }
+  };
+  
+  const Active = async (id) => {
+    try {
+      await axios.post(`http://127.0.0.1:8000/api/admin/users/status/active/${id.id}`).then(setReload(!reload));
+    } catch (error) {
+      console.error('Error posting link:', error);
+    }
+  };
+  
 
   if (loading) {
     return (
@@ -70,23 +89,32 @@ function Patients() {
           <TableCell align="left">{patient.healthCondition}</TableCell>
           <TableCell align="left">{patient.note}</TableCell>
           <TableCell align="right">
-        <div className="flex justify-center">
-          <Link to="/">
-            <Button
-              variant="contained"
-              sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'darkgreen' } }}
-            >
-              Active
-            </Button>
-          </Link>
-          <Link to="/">
+          <div className="flex justify-center">
+          {patient.isActive == 1 ? (
             <Button
               variant="outlined"
-              sx={{ borderColor: 'red', color: 'red', '&:hover': { borderColor: 'darkred', color: 'darkred' } }}
+              sx={{
+                borderColor: 'red',
+                color: 'red',
+                '&:hover': { borderColor: 'darkred', color: 'darkred' },
+              }}
+onClick={() => InActive({ id: patient.id })}
             >
               Inactive
             </Button>
-          </Link>
+          ) : (
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: 'green',
+                color: 'white',
+                '&:hover': { backgroundColor: 'darkgreen' },
+              }}
+              onClick={() => Active({ id: patient.id })}
+            >
+              Active
+            </Button>
+          )}
         </div>
       </TableCell>
       <TableCell align="right">
