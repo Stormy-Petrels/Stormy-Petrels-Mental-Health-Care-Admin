@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useState, useEffect } from "react";
-import {  useHistory } from "react-router-dom";
+import {  useHistory, useLocation } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -28,6 +28,7 @@ function Patients() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const history = useHistory();
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     axios
@@ -40,7 +41,7 @@ function Patients() {
       .catch((err) => {
         console.error(err);
       });
-  }, []);
+  }, [reload]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -52,21 +53,20 @@ function Patients() {
   };
   const InActive = async (id) => {
     try {
-      await axios.post(`http://127.0.0.1:8000/api/admin/users/status/block/${id.id}`);
-      history.go(0);
+      await axios.post(`http://127.0.0.1:8000/api/admin/users/status/block/${id.id}`).then(setReload(!reload));
     } catch (error) {
       console.error('Error posting link:', error);
     }
   };
-
+  
   const Active = async (id) => {
     try {
-      await axios.post(`http://127.0.0.1:8000/api/admin/users/status/active/${id.id}`);
-      history.push('/admin/patients');
+      await axios.post(`http://127.0.0.1:8000/api/admin/users/status/active/${id.id}`).then(setReload(!reload));
     } catch (error) {
       console.error('Error posting link:', error);
     }
   };
+  
 
   if (loading) {
     return (
