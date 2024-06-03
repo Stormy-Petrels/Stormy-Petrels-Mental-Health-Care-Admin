@@ -38,7 +38,7 @@ const Navbar = () => {
           variant="h6"
           sx={{
             color: '#3DA58A',
-            fontSize: '0.875rem', // Adjusted font size
+            fontSize: '0.875rem', 
             textAlign: 'center',
             marginBottom: 1
           }}  >
