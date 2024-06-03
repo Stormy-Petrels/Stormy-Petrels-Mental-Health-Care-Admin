@@ -64,7 +64,7 @@ export default function CardComponent({ title, value, percentage, since, iconTyp
           {value}
         </Typography>
         <Typography color="textSecondary">
-          <PercentageComponent>{percentage}</PercentageComponent> {since}
+          {since}
         </Typography>
       </CardContent>
       <IconContainer bgcolor={bgcolor}>
