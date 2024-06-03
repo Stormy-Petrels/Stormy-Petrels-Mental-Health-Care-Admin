@@ -16,9 +16,9 @@ import {
 } from "@mui/material";
 import Loading from "../components/Loading";
 
-function Patients() {
+function Doctors() {
   const [loading, setLoading] = useState(true);
-  const [patients, setPatients] = useState([]);
+  const [doctors, setDoctors] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -26,7 +26,7 @@ function Patients() {
     axios
       .get(`http://127.0.0.1:8000/api/admin/doctors`)
       .then((res) => {
-        setPatients(res.data.data);
+        setDoctors(res.data.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -54,28 +54,28 @@ function Patients() {
 
   const baseURL = "http://127.0.0.1:8000/images/"; // Adjust this base URL as per your backend setup
 
-  var patientDetails = patients
+  var doctorDetails = doctors
     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-    .map((patient) => {
+    .map((doctor) => {
       return (
-        <TableRow key={patient.id}>
-          <TableCell align="left">{patient.fullName}</TableCell>
+        <TableRow key={doctor.id}>
+          <TableCell align="left">{doctor.fullName}</TableCell>
           <TableCell align="left">
-            {patient.image ? (
+            {doctor.image ? (
               <img
-                src={`${baseURL}${patient.image}`}
-                alt={patient.fullName}
+                src={`${baseURL}${doctor.image}`}
+                alt={doctor.fullName}
                 style={{ width: "50px", height: "50px", objectFit: "cover" }}
               />
             ) : (
               "No Image"
             )}
           </TableCell>
-          <TableCell align="left">{patient.email}</TableCell>
-          <TableCell align="left">{patient.phone}</TableCell>
-          <TableCell align="left">{patient.address}</TableCell>
-          <TableCell align="left">{patient.major}</TableCell>
-          <TableCell align="left">{patient.description}</TableCell>
+          <TableCell align="left">{doctor.email}</TableCell>
+          <TableCell align="left">{doctor.phone}</TableCell>
+          <TableCell align="left">{doctor.address}</TableCell>
+          <TableCell align="left">{doctor.major}</TableCell>
+          <TableCell align="left">{doctor.description}</TableCell>
           <TableCell align="right">
             <div className="flex justify-center">
               <Link to="/">
@@ -97,7 +97,7 @@ function Patients() {
             </div>
           </TableCell>
           <TableCell align="right">
-            <Link to={`/admin/doctors/${patient.id}/edit`}>
+            <Link to={`/admin/doctors/${doctor.id}/edit`}>
               <Button
                 variant="contained"
                 sx={{ backgroundColor: 'blue', color: 'white', '&:hover': { backgroundColor: 'darkblue' } }}
@@ -150,13 +150,13 @@ function Patients() {
                 </TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>{patientDetails}</TableBody>
+            <TableBody>{doctorDetails}</TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={patients.length}
+          count={doctors.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -167,4 +167,4 @@ function Patients() {
   );
 }
 
-export default Patients;
+export default Doctors;
