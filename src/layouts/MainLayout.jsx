@@ -9,6 +9,7 @@ import PatientCreate from "../pages/PatientCreate";
 import PatientEdit from "../pages/PatientEdit";
 import DoctorCreate from "../pages/DoctorCreate";
 import DoctorEdit from "../pages/DoctorEdit";
+import Statistic from "../pages/Statistic";
 const MainLayout = () => {
   return (
     <div className="container" >
@@ -22,6 +23,7 @@ const MainLayout = () => {
         <Route exact path="/admin/patients/create" component={PatientCreate} />
         <Route exact path="/admin/patients/:id/edit" component={PatientEdit} />
         <Route exact path="/admin/appointments" component={Appointments} />
+        <Route exact path="/admin/statistic" component={Statistic} />
         <Route path="/*" component={NotFound}></Route>
       </Switch>
     </div>

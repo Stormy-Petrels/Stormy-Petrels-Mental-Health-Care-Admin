@@ -91,7 +91,7 @@ function Appointment() {
     <div>
       <div className="flex justify-between">
         <Typography variant="h4" gutterBottom>
-          Management patients
+          Management appointment
         </Typography>
       </div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
