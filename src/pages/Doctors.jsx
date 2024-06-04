@@ -13,6 +13,8 @@ import {
   Paper,
   TablePagination,
   Button,
+  Typography,
+  Avatar,
 } from "@mui/material";
 import Loading from "../components/Loading";
 
@@ -59,29 +61,42 @@ function Doctors() {
     .map((doctor) => {
       return (
         <TableRow key={doctor.id}>
-          <TableCell align="left">{doctor.fullName}</TableCell>
-          <TableCell align="left">
-            {doctor.image ? (
-              <img
-                src={`${baseURL}${doctor.image}`}
-                alt={doctor.fullName}
-                style={{ width: "50px", height: "50px", objectFit: "cover" }}
-              />
-            ) : (
-              "No Image"
-            )}
+          <TableCell
+            align="left"
+            sx={{ display: "flex", alignItems: "center", height: "100%" }}
+          >
+            <Avatar
+              alt={doctor.fullName}
+              src={`${baseURL}${doctor.image}`}
+              sx={{ marginRight: 2 }}
+            />
+            <Typography variant="body1">{doctor.fullName}</Typography>
           </TableCell>
-          <TableCell align="left">{doctor.email}</TableCell>
-          <TableCell align="left">{doctor.phone}</TableCell>
-          <TableCell align="left">{doctor.address}</TableCell>
-          <TableCell align="left">{doctor.major}</TableCell>
-          <TableCell align="left">{doctor.description}</TableCell>
-          <TableCell align="right">
+          <TableCell align="left" sx={{ verticalAlign: "middle" }}>
+            {doctor.email}
+          </TableCell>
+          <TableCell align="left" sx={{ verticalAlign: "middle" }}>
+            {doctor.phone}
+          </TableCell>
+          <TableCell align="left" sx={{ verticalAlign: "middle" }}>
+            {doctor.address}
+          </TableCell>
+          <TableCell align="left" sx={{ verticalAlign: "middle" }}>
+            {doctor.major}
+          </TableCell>
+          <TableCell align="left" sx={{ verticalAlign: "middle" }}>
+            {doctor.description}
+          </TableCell>
+          <TableCell align="right" sx={{ verticalAlign: "middle" }}>
             <div className="flex justify-center">
               <Link to="/">
                 <Button
                   variant="contained"
-                  sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'darkgreen' } }}
+                  sx={{
+                    backgroundColor: "green",
+                    color: "white",
+                    "&:hover": { backgroundColor: "darkgreen" },
+                  }}
                 >
                   Active
                 </Button>
@@ -89,18 +104,26 @@ function Doctors() {
               <Link to="/">
                 <Button
                   variant="outlined"
-                  sx={{ borderColor: 'red', color: 'red', '&:hover': { borderColor: 'darkred', color: 'darkred' } }}
+                  sx={{
+                    borderColor: "red",
+                    color: "red",
+                    "&:hover": { borderColor: "darkred", color: "darkred" },
+                  }}
                 >
                   Inactive
                 </Button>
               </Link>
             </div>
           </TableCell>
-          <TableCell align="right">
+          <TableCell align="right" sx={{ verticalAlign: "middle" }}>
             <Link to={`/admin/doctors/${doctor.id}/edit`}>
               <Button
                 variant="contained"
-                sx={{ backgroundColor: 'blue', color: 'white', '&:hover': { backgroundColor: 'darkblue' } }}
+                sx={{
+                  backgroundColor: "blue",
+                  color: "white",
+                  "&:hover": { backgroundColor: "darkblue" },
+                }}
               >
                 EDIT
               </Button>
@@ -113,21 +136,31 @@ function Doctors() {
   return (
     <div>
       <div className="flex justify-between">
-        <h1 className="font-bold text-3xl mb-4">Management doctors</h1>
-        <Button variant="contained"><Link to="/admin/doctors/create">ADD</Link></Button>
+        <Typography variant="h4" gutterBottom>
+          Management doctors
+        </Typography>
+        <Link to="/admin/doctors/create">
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "blue",
+              color: "white",
+              "&:hover": { backgroundColor: "darkblue" },
+            }}
+          >
+            Add
+          </Button>
+        </Link>
       </div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 600 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell align="left" style={{ minWidth: 100 }}>
+                <TableCell align="left" style={{ minWidth: 150 }}>
                   Name
                 </TableCell>
-                <TableCell align="left" style={{ maxWidth: 90 }}>
-                  Avt
-                </TableCell>
-                <TableCell align="left" style={{ minWidth: 50 }}>
+                <TableCell align="left" style={{ minWidth: 40 }}>
                   Email
                 </TableCell>
                 <TableCell align="left" style={{ minWidth: 20 }}>
@@ -139,7 +172,7 @@ function Doctors() {
                 <TableCell align="left" style={{ minWidth: 100 }}>
                   Major
                 </TableCell>
-                <TableCell align="left" style={{ minWidth: 120 }}>
+                <TableCell align="left" style={{ minWidth: 170 }}>
                   Description
                 </TableCell>
                 <TableCell align="left" style={{ minWidth: 70 }}>

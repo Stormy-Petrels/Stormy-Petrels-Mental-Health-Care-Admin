@@ -11,9 +11,11 @@ import {
   MenuItem,
   Typography,
   Grid,
+  IconButton,
 } from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 function DoctorEdit() {
   let { id } = useParams();
@@ -73,12 +75,12 @@ function DoctorEdit() {
     };
   
     axios
-      .post(`http://127.0.0.1:8000/api/updateProfile/doctor/${id}`, data)
+      .post(`http://127.0.0.1:8000/api/updateProfile/doctor`, data)
       .then((res) => {
         toast.success("Update doctor successfully");
         setTimeout(() => {
           history.push("/admin/doctors");
-        }, 2000);
+        }, 1500);
       })
       .catch((err) => {
         toast.error("Error updating doctor");
@@ -90,16 +92,13 @@ function DoctorEdit() {
     <div>
       <Container>
         <ToastContainer />
-        <div className="flex justify-between">
-          <h1 className="font-bold text-2xl mb-4">Edit Doctor</h1>
-          <Button variant="contained">
-            <Link
-              to="/admin/doctors"
-              style={{ textDecoration: "none", color: "white" }}
-            >
-              Back
-            </Link>
-          </Button>
+        <div className="flex ">
+        <IconButton className="justify-content" component={Link} to="/admin/doctors" aria-label="back">
+            <ArrowBackIcon />
+          </IconButton>
+          <Typography variant="h5" gutterBottom>
+                Edit doctor
+            </Typography>
         </div>
         <div>
           <form onSubmit={handleUpdate}>

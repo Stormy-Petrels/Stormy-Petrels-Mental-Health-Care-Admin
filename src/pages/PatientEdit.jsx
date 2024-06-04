@@ -79,7 +79,7 @@ function PatientEdit() {
             <IconButton className="justify-content" component={Link} to="/admin/patients" aria-label="back">
                 <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h5" gutterBottom>
                 Edit patient
             </Typography>
         </div>

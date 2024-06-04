@@ -22,9 +22,7 @@ const Navbar = () => {
       }}
     >
       <Box>
-        <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
-          <Logo />
-        </Box>
+        
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
           
         <Avatar
@@ -48,7 +46,7 @@ const Navbar = () => {
           </Box>
         <Divider />
         <List>
-          <ListItem button component={Link} to="/admin/dashboard" sx={{ display: 'flex', alignItems: 'center' }}>
+          <ListItem button component={Link} to="/" sx={{ display: 'flex', alignItems: 'center' }}>
             <ListItemIcon sx={{ minWidth: 35 }}>
               <DashboardIcon />
             </ListItemIcon>

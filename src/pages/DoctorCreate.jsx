@@ -98,9 +98,9 @@ function DoctorCreate() {
           <IconButton className="justify-content" component={Link} to="/admin/doctors" aria-label="back">
             <ArrowBackIcon />
           </IconButton>
-          <Typography variant="h4" gutterBottom>
-            Create doctor
-          </Typography>
+          <Typography variant="h5" gutterBottom>
+                Add doctor
+            </Typography>
         </div>
         <div>
           <form onSubmit={handleSubmit}>

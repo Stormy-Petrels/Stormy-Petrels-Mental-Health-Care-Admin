@@ -77,7 +77,7 @@ function PatientCreate() {
             <IconButton className="justify-content" component={Link} to="/admin/patients" aria-label="back">
                 <ArrowBackIcon />
             </IconButton>
-            <Typography variant="h4" gutterBottom>
+            <Typography variant="h5" gutterBottom>
                 Add patient
             </Typography>
         </div>
