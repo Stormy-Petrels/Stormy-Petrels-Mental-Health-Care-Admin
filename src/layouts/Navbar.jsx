@@ -22,9 +22,7 @@ const Navbar = () => {
       }}
     >
       <Box>
-        <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
-          <Logo />
-        </Box>
+        
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
           
         <Avatar
