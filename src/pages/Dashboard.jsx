@@ -6,7 +6,9 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
 } from "@mui/material";
 import { styled } from "@mui/system";
@@ -32,6 +34,23 @@ export default function Dashboard() {
   const [doctors, setDoctors] = useState([]);
   const [majors, setMajors] = useState([]);
   const [chartData, setChartData] = useState({});
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 6));
+    setPage(0);
+  };
+
+  const visibleDoctors = doctors.slice(
+    page * rowsPerPage,
+    page * rowsPerPage + rowsPerPage
+  );
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -154,33 +173,33 @@ export default function Dashboard() {
           <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             Popular doctors
           </Typography>
-          <Paper sx={{ mb: 3 }}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell align="center" style={{ minWidth: 200 }}>
-                    Name Doctor
-                  </TableCell>
-                  <TableCell align="center" style={{ minWidth: 150 }}>
-                    Email
-                  </TableCell>
-                  <TableCell align="center" style={{ minWidth: 120 }}>
-                    Major
-                  </TableCell>
-                  <TableCell align="center" style={{ minWidth: 70 }}>
-                    Slot
-                  </TableCell>
-                  <TableCell align="center" style={{ minWidth: 70 }}>
-                    Total money
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {doctors.length > 0 ? (
-                  doctors.map((doctor, index) => (
+          <Paper sx={{ mb: 3 }} >
+            <TableContainer sx={{ maxHeight: 434 }} >
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="left" style={{ minWidth: 200 }}>
+                      Name Doctor
+                    </TableCell>
+                    <TableCell align="left" style={{ minWidth: 150 }}>
+                      Email
+                    </TableCell>
+                    <TableCell align="left" style={{ minWidth: 120 }}>
+                      Major
+                    </TableCell>
+                    <TableCell align="left" style={{ minWidth: 70 }}>
+                      Slot
+                    </TableCell>
+                    <TableCell align="left" style={{ minWidth: 70 }}>
+                      Total money
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {visibleDoctors.map((doctor, index) => (
                     <TableRow key={index}>
                       <TableCell
-                        align="center"
+                        align="left"
                         style={{ display: "flex", alignItems: "center" }}
                       >
                         <Avatar
@@ -189,23 +208,26 @@ export default function Dashboard() {
                         />
                         <Typography>{doctor.doctorName}</Typography>
                       </TableCell>
-                      <TableCell align="center">{doctor.doctorEmail}</TableCell>
-                      <TableCell align="center">{doctor.doctorMajor}</TableCell>
-                      <TableCell align="center">{doctor.totalSlots}</TableCell>
-                      <TableCell align="center">
+                      <TableCell align="left">{doctor.doctorEmail}</TableCell>
+                      <TableCell align="left">{doctor.doctorMajor}</TableCell>
+                      <TableCell align="left">{doctor.totalSlots}</TableCell>
+                      <TableCell align="left">
                         {doctor.totalEarnings ? doctor.totalEarnings : "0.00"}
                       </TableCell>
                     </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={5} align="center">
-                      No data available
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[6, 12, 25]}
+              component="div"
+              count={doctors.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
           </Paper>
         </Grid>
 
