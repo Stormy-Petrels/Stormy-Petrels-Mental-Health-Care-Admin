@@ -12,8 +12,8 @@ import {
 import { styled } from "@mui/system";
 import CardComponent from "../components/CardComponent";
 import { Typography } from "@mui/material";
-import { Pie } from 'react-chartjs-2';
-import 'chart.js/auto';
+import { Pie } from "react-chartjs-2";
+import "chart.js/auto";
 
 const DashboardContainer = styled("div")({
   flexGrow: 1,
@@ -23,10 +23,10 @@ const DashboardContainer = styled("div")({
 
 export default function Dashboard() {
   const [stats, setStats] = useState({
-    totalUsers: '',
-    totalDoctors: '',
-    totalPatients: '',
-    totalRevenue: ''
+    totalUsers: "",
+    totalDoctors: "",
+    totalPatients: "",
+    totalRevenue: "",
   });
 
   const [doctors, setDoctors] = useState([]);
@@ -36,18 +36,18 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/admin/stats');
+        const response = await fetch("http://127.0.0.1:8000/api/admin/stats");
         const data = await response.json();
         if (data.status === 200) {
           setStats({
             totalUsers: data.data.totalUsers,
             totalDoctors: data.data.totalDoctors,
             totalPatients: data.data.totalPatients,
-            totalRevenue: data.data.totalRevenue
+            totalRevenue: data.data.totalRevenue,
           });
         }
       } catch (error) {
-        console.error('Error fetching stats:', error);
+        console.error("Error fetching stats:", error);
       }
     };
 
@@ -57,13 +57,15 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/admin/stats/doctors');
+        const response = await fetch(
+          "http://127.0.0.1:8000/api/admin/stats/doctors"
+        );
         const data = await response.json();
         if (data.status === 200) {
           setDoctors(data.data);
         }
       } catch (error) {
-        console.error('Error fetching doctors:', error);
+        console.error("Error fetching doctors:", error);
       }
     };
 
@@ -75,22 +77,31 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchMajors = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/admin/stats/majors');
+        const response = await fetch(
+          "http://127.0.0.1:8000/api/admin/stats/majors"
+        );
         const data = await response.json();
         if (data.status === 200) {
           setMajors(data.data);
           setChartData({
-            labels: data.data.map(major => major.majorName),
+            labels: data.data.map((major) => major.majorName),
             datasets: [
               {
-                data: data.data.map(major => major.totalDoctors),
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
-              }
-            ]
+                data: data.data.map((major) => major.totalDoctors),
+                backgroundColor: [
+                  "#FF6384",
+                  "#36A2EB",
+                  "#FFCE56",
+                  "#4BC0C0",
+                  "#9966FF",
+                  "#FF9F40",
+                ],
+              },
+            ],
           });
         }
       } catch (error) {
-        console.error('Error fetching majors:', error);
+        console.error("Error fetching majors:", error);
       }
     };
 
@@ -168,14 +179,22 @@ export default function Dashboard() {
                 {doctors.length > 0 ? (
                   doctors.map((doctor, index) => (
                     <TableRow key={index}>
-                      <TableCell align="center">
-                        <Avatar alt={doctor.doctorName} src={`${baseURL}${doctor.avatar}`} />
-                        {doctor.doctorName}
+                      <TableCell
+                        align="center"
+                        style={{ display: "flex", alignItems: "center" }}
+                      >
+                        <Avatar
+                          alt={doctor.doctorName}
+                          src={`${baseURL}${doctor.avatar}`}
+                        />
+                        <Typography>{doctor.doctorName}</Typography>
                       </TableCell>
                       <TableCell align="center">{doctor.doctorEmail}</TableCell>
                       <TableCell align="center">{doctor.doctorMajor}</TableCell>
                       <TableCell align="center">{doctor.totalSlots}</TableCell>
-                      <TableCell align="center">{doctor.totalEarnings ? doctor.totalEarnings : '0.00'}</TableCell>
+                      <TableCell align="center">
+                        {doctor.totalEarnings ? doctor.totalEarnings : "0.00"}
+                      </TableCell>
                     </TableRow>
                   ))
                 ) : (
@@ -224,7 +243,7 @@ export default function Dashboard() {
               </TableBody>
             </Table>
             {chartData && chartData.labels && chartData.labels.length > 0 && (
-              <div style={{ width: '70%', margin: '0 auto', padding: '20px' }}>
+              <div style={{ width: "70%", margin: "0 auto", padding: "20px" }}>
                 <Pie data={chartData} />
               </div>
             )}
