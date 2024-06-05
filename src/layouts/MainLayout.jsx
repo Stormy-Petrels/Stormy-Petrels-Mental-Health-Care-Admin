@@ -15,7 +15,6 @@ const MainLayout = () => {
   return (
     <div className="container" >
       <Switch>
-        {/* <Route exact path="/" component={Search} /> */}
         <Route exact path="/admin/dashboard" component={Dashboard} />
         <Route exact path="/admin/doctors" component={Doctors} />
         <Route exact path="/admin/doctors/create" component={DoctorCreate} />
