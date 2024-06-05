@@ -12,7 +12,6 @@ import {
   TablePagination,
   Button,
   Typography,
-  Avatar,
 } from "@mui/material";
 import Loading from "../components/Loading"; 
 
@@ -84,16 +83,17 @@ function Doctors() {
     .map((doctor) => {
       return (
         <TableRow key={doctor.id}>
-          <TableCell
-            align="left"
-            sx={{ display: "flex", alignItems: "center", height: "100%" }}
-          >
-            <Avatar
-              alt={doctor.fullName}
-              src={`${baseURL}${doctor.image}`}
-              sx={{ marginRight: 2 }}
-            />
-            <Typography variant="body1">{doctor.fullName}</Typography>
+          <TableCell align="left">{doctor.fullName}</TableCell>
+          <TableCell align="left">
+            {doctor.image ? (
+              <img
+                src={`${baseURL}${doctor.image}`}
+                alt={doctor.fullName}
+                style={{ width: "50px", height: "50px", objectFit: "cover" }}
+              />
+            ) : (
+              "No Image"
+            )}
           </TableCell>
           <TableCell align="left">{doctor.email}</TableCell>
           <TableCell align="left">{doctor.phone}</TableCell>
@@ -168,14 +168,17 @@ onClick={() => InActive({ id: doctor.id })}
         </Link>
       </div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: 600 }}>
+        <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell align="left" style={{ minWidth: 150 }}>
+                <TableCell align="left" style={{ minWidth: 100 }}>
                   Name
                 </TableCell>
-                <TableCell align="left" style={{ minWidth: 40 }}>
+                <TableCell align="left" style={{ maxWidth: 90 }}>
+                  Avt
+                </TableCell>
+                <TableCell align="left" style={{ minWidth: 50 }}>
                   Email
                 </TableCell>
                 <TableCell align="left" style={{ minWidth: 20 }}>
@@ -187,7 +190,7 @@ onClick={() => InActive({ id: doctor.id })}
                 <TableCell align="left" style={{ minWidth: 100 }}>
                   Major
                 </TableCell>
-                <TableCell align="left" style={{ minWidth: 170 }}>
+                <TableCell align="left" style={{ minWidth: 120 }}>
                   Description
                 </TableCell>
                 <TableCell align="left" style={{ minWidth: 70 }}>
