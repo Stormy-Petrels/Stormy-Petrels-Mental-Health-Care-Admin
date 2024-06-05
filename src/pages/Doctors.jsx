@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import {
   Table,
   TableBody,
@@ -14,13 +12,14 @@ import {
   TablePagination,
   Button,
 } from "@mui/material";
-import Loading from "../components/Loading";
+import Loading from "../components/Loading"; 
 
 function Doctors() {
   const [loading, setLoading] = useState(true);
   const [doctors, setDoctors] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [reload, setReload] = useState(false); 
 
   useEffect(() => {
     axios
@@ -32,7 +31,7 @@ function Doctors() {
       .catch((err) => {
         console.error(err);
       });
-  }, []);
+  }, [reload]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -41,6 +40,30 @@ function Doctors() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const InActive = async (id) => {
+    try {
+      const response = await axios.post(`http://127.0.0.1:8000/api/admin/users/status/block/${id.id}`);
+      console.log(response);
+      if (response.status === 200) {
+        setReload(!reload);
+      }
+    } catch (error) {
+      console.error("Error posting link:", error);
+    }
+  };
+
+  const Active = async (id) => {
+    try {
+      const response = await axios.post(`http://127.0.0.1:8000/api/admin/users/status/active/${id.id}`);
+      console.log(response);
+      if (response.status === 200) {
+        setReload(!reload);
+      }
+    } catch (error) {
+      console.error("Error posting link:", error);
+    }
   };
 
   if (loading) {
@@ -52,7 +75,7 @@ function Doctors() {
     );
   }
 
-  const baseURL = "http://127.0.0.1:8000/images/"; // Adjust this base URL as per your backend setup
+  const baseURL = "http://127.0.0.1:8000/images/";
 
   var doctorDetails = doctors
     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -77,30 +100,44 @@ function Doctors() {
           <TableCell align="left">{doctor.major}</TableCell>
           <TableCell align="left">{doctor.description}</TableCell>
           <TableCell align="right">
-            <div className="flex justify-center">
-              <Link to="/">
-                <Button
-                  variant="contained"
-                  sx={{ backgroundColor: 'green', color: 'white', '&:hover': { backgroundColor: 'darkgreen' } }}
-                >
-                  Active
-                </Button>
-              </Link>
-              <Link to="/">
-                <Button
-                  variant="outlined"
-                  sx={{ borderColor: 'red', color: 'red', '&:hover': { borderColor: 'darkred', color: 'darkred' } }}
-                >
-                  Inactive
-                </Button>
-              </Link>
-            </div>
-          </TableCell>
+          <div className="flex justify-center">
+          {doctor.isActive == 1 ? (
+            <Button
+              variant="outlined"
+              sx={{
+                borderColor: 'red',
+                color: 'red',
+                '&:hover': { borderColor: 'darkred', color: 'darkred' },
+              }}
+onClick={() => InActive({ id: doctor.id })}
+            >
+              Inactive
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: 'green',
+                color: 'white',
+                '&:hover': { backgroundColor: 'darkgreen' },
+              }}
+              onClick={() => Active({ id: doctor.id })}
+            >
+              Active
+            </Button>
+          )}
+        </div>
+      </TableCell>
+       
           <TableCell align="right">
             <Link to={`/admin/doctors/${doctor.id}/edit`}>
               <Button
                 variant="contained"
-                sx={{ backgroundColor: 'blue', color: 'white', '&:hover': { backgroundColor: 'darkblue' } }}
+                sx={{
+                  backgroundColor: "blue",
+                  color: "white",
+                  "&:hover": { backgroundColor: "darkblue" },
+                }}
               >
                 EDIT
               </Button>
@@ -114,7 +151,9 @@ function Doctors() {
     <div>
       <div className="flex justify-between">
         <h1 className="font-bold text-3xl mb-4">Management doctors</h1>
-        <Button variant="contained"><Link to="/admin/doctors/create">ADD</Link></Button>
+        <Button variant="contained">
+          <Link to="/admin/doctors/create" style={{ color: 'white', textDecoration: 'none' }}>ADD</Link>
+        </Button>
       </div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
         <TableContainer sx={{ maxHeight: 440 }}>
@@ -154,7 +193,7 @@ function Doctors() {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
+rowsPerPageOptions={[10, 25, 100]}
           component="div"
           count={doctors.length}
           rowsPerPage={rowsPerPage}
