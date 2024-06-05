@@ -10,12 +10,12 @@ import PatientEdit from "../pages/PatientEdit";
 import DoctorCreate from "../pages/DoctorCreate";
 import DoctorEdit from "../pages/DoctorEdit";
 import Statistic from "../pages/Statistic";
+
 const MainLayout = () => {
   return (
     <div className="container" >
       <Switch>
-        {/* <Route exact path="/" component={Search} /> */}
-        <Route exact path="/" component={Dashboard} />
+        <Route exact path="/admin/dashboard" component={Dashboard} />
         <Route exact path="/admin/doctors" component={Doctors} />
         <Route exact path="/admin/doctors/create" component={DoctorCreate} />
         <Route exact path="/admin/doctors/:id/edit" component={DoctorEdit} />
