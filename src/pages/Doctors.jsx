@@ -11,6 +11,7 @@ import {
   Paper,
   TablePagination,
   Button,
+  Typography,
 } from "@mui/material";
 import Loading from "../components/Loading"; 
 
@@ -150,13 +151,24 @@ onClick={() => InActive({ id: doctor.id })}
   return (
     <div>
       <div className="flex justify-between">
-        <h1 className="font-bold text-3xl mb-4">Management doctors</h1>
-        <Button variant="contained">
-          <Link to="/admin/doctors/create" style={{ color: 'white', textDecoration: 'none' }}>ADD</Link>
-        </Button>
+        <Typography variant="h4" gutterBottom>
+          Management doctors
+        </Typography>
+        <Link to="/admin/doctors/create">
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "blue",
+              color: "white",
+              "&:hover": { backgroundColor: "darkblue" },
+            }}
+          >
+            Add
+          </Button>
+        </Link>
       </div>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: 440 }}>
+        <TableContainer sx={{ maxHeight: 600 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
