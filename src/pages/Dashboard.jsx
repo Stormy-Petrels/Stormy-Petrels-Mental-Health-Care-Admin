@@ -171,7 +171,7 @@ export default function Dashboard() {
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
-            Popular doctors
+            Top 10 doctors
           </Typography>
           <Paper sx={{ mb: 3 }} >
             <TableContainer sx={{ maxHeight: 434 }} >

@@ -88,15 +88,39 @@ function Patients() {
           <TableCell align="left">{patient.address}</TableCell>
           <TableCell align="left">{patient.healthCondition}</TableCell>
           <TableCell align="left">{patient.note}</TableCell>
-          <TableCell align="right">
-          <div className="flex justify-center">
+          <TableCell align="left">
+          {patient.isActive === "1" ? (
+              <Typography style={{ color: "green" }}>active</Typography>
+            ) : (
+              <Typography style={{ color: "red" }}>inactive</Typography>
+            )}
+      </TableCell>
+      <TableCell align="left">
+        <Link to={`/admin/patients/${patient.id}/edit`}>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "blue",
+              color: "white",
+              fontSize: "4",
+              "&:hover": { backgroundColor: "darkblue" },
+              width: 80,
+            }}
+          >
+            Edit
+          </Button>
+        </Link>
+
+        <div >
           {patient.isActive == 1 ? (
             <Button
               variant="outlined"
               sx={{
-                borderColor: 'red',
-                color: 'red',
-                '&:hover': { borderColor: 'darkred', color: 'darkred' },
+                borderColor: "red",
+                fontSize: "12",
+                color: "red",
+                "&:hover": { borderColor: "darkred", color: "darkred" },
+                width: 80,
               }}
 onClick={() => InActive({ id: patient.id })}
             >
@@ -106,9 +130,10 @@ onClick={() => InActive({ id: patient.id })}
             <Button
               variant="contained"
               sx={{
-                backgroundColor: 'green',
-                color: 'white',
-                '&:hover': { backgroundColor: 'darkgreen' },
+                backgroundColor: "green",
+                color: "white",
+                "&:hover": { backgroundColor: "darkgreen" },
+                width: 80,
               }}
               onClick={() => Active({ id: patient.id })}
             >
@@ -116,16 +141,7 @@ onClick={() => InActive({ id: patient.id })}
             </Button>
           )}
         </div>
-      </TableCell>
-      <TableCell align="right">
-        <Link to={`/admin/patients/${patient.id}/edit`}>
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: 'blue', color: 'white', '&:hover': { backgroundColor: 'darkblue' } }}
-          >
-            Edit
-          </Button>
-        </Link>
+
       </TableCell>
         </TableRow>
       );
