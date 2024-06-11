@@ -1,24 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import { Button, TextField, Container, Typography, IconButton, Grid, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Container,
+  Typography,
+  IconButton,
+  Grid,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 function DoctorCreate() {
   const [inputErrorList, setInputErrorList] = useState({});
   const [majors, setMajors] = useState([]);
   const [doctor, setDoctor] = useState({
-    description: '',
-    major: '',
-    email: '',
-    password: '',
-    fullName: '',
-    address: '',
-    phone: '',
+    description: "",
+    major: "",
+    email: "",
+    password: "",
+    fullName: "",
+    address: "",
+    phone: "",
     isActive: 1,
-    urlImage: null
+    urlImage: null,
   });
   const history = useHistory();
 
@@ -46,36 +57,37 @@ function DoctorCreate() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('description', doctor.description);
-    formData.append('major', doctor.major);
-    formData.append('email', doctor.email);
-    formData.append('password', doctor.password);
-    formData.append('fullName', doctor.fullName);
-    formData.append('address', doctor.address);
-    formData.append('phone', doctor.phone);
-    formData.append('isActive', doctor.isActive);
-    formData.append('urlImage', doctor.urlImage);
+    formData.append("description", doctor.description);
+    formData.append("major", doctor.major);
+    formData.append("email", doctor.email);
+    formData.append("password", doctor.password);
+    formData.append("fullName", doctor.fullName);
+    formData.append("address", doctor.address);
+    formData.append("phone", doctor.phone);
+    formData.append("isActive", doctor.isActive);
+    formData.append("urlImage", doctor.urlImage);
 
-    axios.post('http://127.0.0.1:8000/api/admin/doctors/create', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
+    axios
+      .post("http://127.0.0.1:8000/api/admin/doctors/create", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((res) => {
-        toast.success('Add doctor successfully');
+        toast.success("Add doctor successfully");
         setTimeout(() => {
-          history.push('/admin/doctors');
+          history.push("/admin/doctors");
         }, 2000);
         setDoctor({
-          description: '',
-          major: '',
-          email: '',
-          password: '',
-          fullName: '',
-          address: '',
-          phone: '',
+          description: "",
+          major: "",
+          email: "",
+          password: "",
+          fullName: "",
+          address: "",
+          phone: "",
           isActive: 1,
-          urlImage: null
+          urlImage: null,
         });
         setInputErrorList({});
       })
@@ -85,8 +97,8 @@ function DoctorCreate() {
             setInputErrorList(err.response.data.errors);
           }
         }
-        toast.error('Have an error');
-        console.error('Error adding doctor:', err);
+        toast.error("Have an error");
+        console.error("Error adding doctor:", err);
       });
   };
 
@@ -95,12 +107,17 @@ function DoctorCreate() {
       <Container>
         <ToastContainer />
         <div className="flex">
-          <IconButton className="justify-content" component={Link} to="/admin/doctors" aria-label="back">
+          <IconButton
+            className="justify-content"
+            component={Link}
+            to="/admin/doctors"
+            aria-label="back"
+          >
             <ArrowBackIcon />
           </IconButton>
           <Typography variant="h5" gutterBottom>
-                Add doctor
-            </Typography>
+            Add doctor
+          </Typography>
         </div>
         <div>
           <form onSubmit={handleSubmit}>
@@ -115,7 +132,9 @@ function DoctorCreate() {
                   margin="normal"
                   required
                   error={!!inputErrorList.fullName}
-                  helperText={inputErrorList.fullName && inputErrorList.fullName[0]}
+                  helperText={
+                    inputErrorList.fullName && inputErrorList.fullName[0]
+                  }
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -143,7 +162,9 @@ function DoctorCreate() {
                   margin="normal"
                   required
                   error={!!inputErrorList.password}
-                  helperText={inputErrorList.password && inputErrorList.password[0]}
+                  helperText={
+                    inputErrorList.password && inputErrorList.password[0]
+                  }
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -169,7 +190,9 @@ function DoctorCreate() {
                   margin="normal"
                   required
                   error={!!inputErrorList.address}
-                  helperText={inputErrorList.address && inputErrorList.address[0]}
+                  helperText={
+                    inputErrorList.address && inputErrorList.address[0]
+                  }
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -181,7 +204,9 @@ function DoctorCreate() {
                   fullWidth
                   margin="normal"
                   error={!!inputErrorList.description}
-                  helperText={inputErrorList.description && inputErrorList.description[0]}
+                  helperText={
+                    inputErrorList.description && inputErrorList.description[0]
+                  }
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -192,7 +217,7 @@ function DoctorCreate() {
                     value={doctor.major}
                     onChange={handleInput}
                   >
-                    {majors.map(major => (
+                    {majors.map((major) => (
                       <MenuItem key={major.id} value={major.id}>
                         {major.name}
                       </MenuItem>
@@ -200,13 +225,29 @@ function DoctorCreate() {
                   </Select>
                 </FormControl>
               </Grid>
+
               <Grid item xs={12} md={4}>
-                <input type="file" name="urlImage" onChange={handleImageChange} />
+                <Button
+                  variant="outlined"
+                  component="label"
+                  sx={{ mt: 2 }}
+                >
+                  <input
+                    name="urlImage"
+                  
+                    type="file"
+                    onChange={handleImageChange}
+                  />
+                </Button>
               </Grid>
 
-              
               <Grid item xs={12}>
-                <Button type="submit" variant="contained" color="primary" fullWidth>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                >
                   Add Doctor
                 </Button>
               </Grid>

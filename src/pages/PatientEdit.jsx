@@ -7,14 +7,11 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-import { IconButton, InputAdornment } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { IconButton} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 function PatientEdit() {
   let { id } = useParams();
-
   const [patient, setPatient] = useState({});
-
   useEffect(() => {
     axios
       .get(`http://127.0.0.1:8000/api/profile/${id}`)
