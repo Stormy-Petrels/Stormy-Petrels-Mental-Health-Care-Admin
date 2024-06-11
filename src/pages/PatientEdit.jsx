@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 function PatientEdit() {
   let { id } = useParams();
 
@@ -48,7 +48,7 @@ function PatientEdit() {
     };
 
     axios
-      .post(`http://127.0.0.1:8000/api/profile/${id}`, data)
+      .post(`http://127.0.0.1:8000/api/profile/${id}/edit`, data)
       .then((res) => {
         toast.success("Update patient successfully");
         setTimeout(() => {
@@ -76,128 +76,134 @@ function PatientEdit() {
       <Container>
         <ToastContainer />
         <div className="flex">
-            <IconButton className="justify-content" component={Link} to="/admin/patients" aria-label="back">
-                <ArrowBackIcon />
-            </IconButton>
-            <Typography variant="h5" gutterBottom>
-                Edit patient
-            </Typography>
+          <IconButton
+            className="justify-content"
+            component={Link}
+            to="/admin/patients"
+            aria-label="back"
+          >
+            <ArrowBackIcon />
+          </IconButton>
+          <Typography variant="h5" gutterBottom>
+            Edit patient
+          </Typography>
         </div>
         <div>
-        <form onSubmit={handleUpdate}>
+          <form onSubmit={handleUpdate}>
             <Grid container spacing={3}>
-          
-                <Grid item xs={12} md={4}>
-                    <TextField
-                        label="Full Name"
-                        name="fullName"
-                        value={patient.fullName}
-                        onChange={handleInput}
-                        fullWidth
-                        margin="normal"
-                        required
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <TextField
-                        label="Email"
-                        name="email"
-                        value={patient.email}
-                        onChange={handleInput}
-                        type="email"
-                        fullWidth
-                        margin="normal"
-                        required
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} md={4}>
-                    <TextField
-                        label="Password"
-                        name="password"
-                        value={patient.password}
-                        onChange={handleInput}
-                        type="password"
-                        fullWidth
-                        margin="normal"
-                        required
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                </Grid>
+              <Grid item xs={12} md={4}>
+                <TextField
+                  label="Full Name"
+                  name="fullName"
+                  value={patient.fullName}
+                  onChange={handleInput}
+                  fullWidth
+                  margin="normal"
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <TextField
+                  label="Email"
+                  name="email"
+                  value={patient.email}
+                  onChange={handleInput}
+                  type="email"
+                  fullWidth
+                  margin="normal"
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <TextField
+                  label="Password"
+                  name="password"
+                  value={patient.password}
+                  onChange={handleInput}
+                  type="password"
+                  fullWidth
+                  margin="normal"
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
 
-             
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        label="Phone"
-                        name="phone"
-                        value={patient.phone}
-                        onChange={handleInput}
-                        fullWidth
-                        margin="normal"
-                        required
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        label="Address"
-                        name="address"
-                        value={patient.address}
-                        onChange={handleInput}
-                        fullWidth
-                        margin="normal"
-                        required
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  label="Phone"
+                  name="phone"
+                  value={patient.phone}
+                  onChange={handleInput}
+                  fullWidth
+                  margin="normal"
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  label="Address"
+                  name="address"
+                  value={patient.address}
+                  onChange={handleInput}
+                  fullWidth
+                  margin="normal"
+                  required
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
 
-               
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        label="Health Condition"
-                        name="healthCondition"
-                        value={patient.healthCondition}
-                        onChange={handleInput}
-                        fullWidth
-                        margin="normal"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        label="Note"
-                        name="note"
-                        value={patient.note}
-                        onChange={handleInput}
-                        fullWidth
-                        margin="normal"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                </Grid>
-                
-            
-                <Grid item xs={12}>
-                    <Button type="submit" variant="contained" color="primary" fullWidth>
-                        Update patient
-                    </Button>
-                </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  label="Health Condition"
+                  name="healthCondition"
+                  value={patient.healthCondition}
+                  onChange={handleInput}
+                  fullWidth
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  label="Note"
+                  name="note"
+                  value={patient.note}
+                  onChange={handleInput}
+                  fullWidth
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  fullWidth
+                >
+                  Update patient
+                </Button>
+              </Grid>
             </Grid>
-        </form>
+          </form>
         </div>
       </Container>
     </div>
