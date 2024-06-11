@@ -13,14 +13,14 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import Loading from "../components/Loading"; 
+import Loading from "../components/Loading";
 
 function Doctors() {
   const [loading, setLoading] = useState(true);
   const [doctors, setDoctors] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [reload, setReload] = useState(false); 
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     axios
@@ -45,7 +45,9 @@ function Doctors() {
 
   const InActive = async (id) => {
     try {
-      const response = await axios.post(`http://127.0.0.1:8000/api/admin/users/status/block/${id.id}`);
+      const response = await axios.post(
+        `http://127.0.0.1:8000/api/admin/users/status/block/${id.id}`
+      );
       console.log(response);
       if (response.status === 200) {
         setReload(!reload);
@@ -57,7 +59,9 @@ function Doctors() {
 
   const Active = async (id) => {
     try {
-      const response = await axios.post(`http://127.0.0.1:8000/api/admin/users/status/active/${id.id}`);
+      const response = await axios.post(
+        `http://127.0.0.1:8000/api/admin/users/status/active/${id.id}`
+      );
       console.log(response);
       if (response.status === 200) {
         setReload(!reload);
@@ -100,49 +104,60 @@ function Doctors() {
           <TableCell align="left">{doctor.address}</TableCell>
           <TableCell align="left">{doctor.major}</TableCell>
           <TableCell align="left">{doctor.description}</TableCell>
-          <TableCell align="right">
-          <div className="flex justify-center">
-          {doctor.isActive == 1 ? (
-            <Button
-              variant="outlined"
-              sx={{
-                borderColor: 'red',
-                color: 'red',
-                '&:hover': { borderColor: 'darkred', color: 'darkred' },
-              }}
-onClick={() => InActive({ id: doctor.id })}
-            >
-              Inactive
-            </Button>
-          ) : (
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: 'green',
-                color: 'white',
-                '&:hover': { backgroundColor: 'darkgreen' },
-              }}
-              onClick={() => Active({ id: doctor.id })}
-            >
-              Active
-            </Button>
-          )}
-        </div>
-      </TableCell>
-       
-          <TableCell align="right">
+          <TableCell align="left">
+            {doctor.isActive === "1" ? (
+              <Typography style={{ color: "green" }}>active</Typography>
+            ) : (
+              <Typography style={{ color: "red" }}>inactive</Typography>
+            )}
+          </TableCell>
+
+          <TableCell align="left">
             <Link to={`/admin/doctors/${doctor.id}/edit`}>
               <Button
                 variant="contained"
                 sx={{
                   backgroundColor: "blue",
                   color: "white",
+                  fontSize: "4",
                   "&:hover": { backgroundColor: "darkblue" },
+                  width: 80,
                 }}
               >
-                EDIT
+                Edit
               </Button>
             </Link>
+
+            <div className="flex justify-center">
+              {doctor.isActive == 1 ? (
+                <Button
+                  variant="outlined"
+                  sx={{
+                    borderColor: "red",
+                    fontSize: "12",
+                    color: "red",
+                    "&:hover": { borderColor: "darkred", color: "darkred" },
+                    width: 80,
+                  }}
+                  onClick={() => InActive({ id: doctor.id })}
+                >
+                  Inactive
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "green",
+                    color: "white",
+                    "&:hover": { backgroundColor: "darkgreen" },
+                    width: 80,
+                  }}
+                  onClick={() => Active({ id: doctor.id })}
+                >
+                  Active
+                </Button>
+              )}
+            </div>
           </TableCell>
         </TableRow>
       );
@@ -205,7 +220,7 @@ onClick={() => InActive({ id: doctor.id })}
           </Table>
         </TableContainer>
         <TablePagination
-rowsPerPageOptions={[10, 25, 100]}
+          rowsPerPageOptions={[10, 25, 100]}
           component="div"
           count={doctors.length}
           rowsPerPage={rowsPerPage}
