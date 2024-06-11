@@ -12,6 +12,7 @@ import {
   TablePagination,
   Button,
   Typography,
+  Avatar,
 } from "@mui/material";
 import Loading from "../components/Loading";
 
@@ -87,18 +88,13 @@ function Doctors() {
     .map((doctor) => {
       return (
         <TableRow key={doctor.id}>
-          <TableCell align="left">{doctor.fullName}</TableCell>
           <TableCell align="left">
-            {doctor.image ? (
-              <img
-                src={`${baseURL}${doctor.image}`}
-                alt={doctor.fullName}
-                style={{ width: "50px", height: "50px", objectFit: "cover" }}
-              />
-            ) : (
-              "No Image"
-            )}
+<Avatar
+                          alt={doctor.doctorName}
+                          src={`${baseURL}${doctor.image}`}
+                        />
           </TableCell>
+              <TableCell align="left">{doctor.fullName}</TableCell>
           <TableCell align="left">{doctor.email}</TableCell>
           <TableCell align="left">{doctor.phone}</TableCell>
           <TableCell align="left">{doctor.address}</TableCell>
@@ -187,11 +183,11 @@ function Doctors() {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell align="left" style={{ minWidth: 100 }}>
+              <TableCell align="left" style={{ maxWidth: 100 }}>
                   Name
                 </TableCell>
-                <TableCell align="left" style={{ maxWidth: 90 }}>
-                  Avt
+                <TableCell align="left" style={{ minWidth: 100 }}>
+                
                 </TableCell>
                 <TableCell align="left" style={{ minWidth: 50 }}>
                   Email
