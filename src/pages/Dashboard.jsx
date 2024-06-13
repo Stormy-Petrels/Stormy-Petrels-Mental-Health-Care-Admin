@@ -58,11 +58,13 @@ export default function Dashboard() {
         const response = await fetch("http://127.0.0.1:8000/api/admin/stats");
         const data = await response.json();
         if (data.status === 200) {
+          const convertRevenue = parseFloat(data.data.totalRevenue);
+          const formattedRevenue = convertRevenue.toLocaleString("vi-VN");
           setStats({
             totalUsers: data.data.totalUsers,
             totalDoctors: data.data.totalDoctors,
             totalPatients: data.data.totalPatients,
-            totalRevenue: data.data.totalRevenue,
+            totalRevenue: formattedRevenue,
           });
         }
       } catch (error) {
@@ -76,12 +78,20 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await fetch(
-          "http://127.0.0.1:8000/api/admin/stats/doctors"
-        );
+        const response = await fetch("http://127.0.0.1:8000/api/admin/stats/doctors");
         const data = await response.json();
         if (data.status === 200) {
-          setDoctors(data.data);
+          const formattedDoctors = data.data.map(doctor => {
+            let formattedEarnings;
+            if (parseFloat(doctor.totalEarnings) === 0) {
+              formattedEarnings = 0;
+            } else {
+              const earnings = parseFloat(doctor.totalEarnings);
+              formattedEarnings = earnings.toLocaleString('vi-VN');
+            }
+            return { ...doctor, totalEarnings: formattedEarnings };
+          });
+          setDoctors(formattedDoctors);
         }
       } catch (error) {
         console.error("Error fetching doctors:", error);
@@ -173,8 +183,8 @@ export default function Dashboard() {
           <Typography variant="h5" sx={{ mt: 3, mb: 2 }}>
             Top 10 doctors
           </Typography>
-          <Paper sx={{ mb: 3 }} >
-            <TableContainer sx={{ maxHeight: 434 }} >
+          <Paper sx={{ mb: 3 }}>
+            <TableContainer sx={{ maxHeight: 434 }}>
               <Table>
                 <TableHead>
                   <TableRow>
@@ -212,7 +222,7 @@ export default function Dashboard() {
                       <TableCell align="left">{doctor.doctorMajor}</TableCell>
                       <TableCell align="left">{doctor.totalSlots}</TableCell>
                       <TableCell align="left">
-                        {doctor.totalEarnings ? doctor.totalEarnings : "0.00"}
+                      {doctor.totalEarnings}VND
                       </TableCell>
                     </TableRow>
                   ))}
