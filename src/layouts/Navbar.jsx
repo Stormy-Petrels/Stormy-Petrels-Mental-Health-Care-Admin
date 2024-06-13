@@ -6,6 +6,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
 import PeopleIcon from '@mui/icons-material/People';
 import EventIcon from '@mui/icons-material/Event';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'; 
 import HomeIcon from '@mui/icons-material/Home';
 import Logo from "../components/Logo"; 
 import { color } from "@mui/system";
@@ -78,7 +79,17 @@ const Navbar = () => {
           </ListItem>
         </List>
       </Box>
-     
+        <Box>
+        <List>
+          <Divider />
+          <ListItem button component={Link} to="/" sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
+            <ListItemIcon sx={{ minWidth: 35 }}>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItem>
+        </List>
+      </Box>
     </Box>
   );
 };

@@ -41,7 +41,6 @@ function DoctorCreate() {
       })
       .catch((err) => {
         console.error("Error fetching majors:", err);
-        toast.error("Error fetching majors");
       });
   }, []);
 
@@ -234,7 +233,6 @@ function DoctorCreate() {
                 >
                   <input
                     name="urlImage"
-                  
                     type="file"
                     onChange={handleImageChange}
                   />
