@@ -40,12 +40,20 @@ export default function Signin() {
         password,
       });
 
-      if (response.data.payload) {
-        setMessage("Sign in successfully!");
-        localStorage.setItem("authToken", response.data.payload.token);
-        localStorage.setItem("user", JSON.stringify(response.data.payload));
-        history.push("/admin/dashboard"); 
-      }
+      localStorage.setItem("user", JSON.stringify(response.data.payload));
+      const userString = localStorage.getItem("user");
+
+      const user = JSON.parse(userString);
+        const role = user.role;
+        console.log(role);
+        
+        if (role === "Patient") {
+          setMessage("Sign in successfully!");
+          
+          window.location.href = "/"; 
+        } else {
+          setMessage("You are not authorized to access this page.");
+        }
     } catch (error) {
       if (error.response) {
         const { errors, message } = error.response.data;
